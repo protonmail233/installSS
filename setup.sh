@@ -108,7 +108,7 @@ EOF
 }
 ssr_install(){
     echo "sshd: ALL" > /etc/hosts.allow
-    pip install setuptools -U && pip2 install cryptography cymysql==0.9.4 requests pyasn1 ndg-httpsclient pyOpenSSL urllib3 cryptography speedtest-cli
+    pip install setuptools -U && pip2 install cryptography -U && pip2 install cymysql==0.9.4 requests pyasn1 ndg-httpsclient pyOpenSSL urllib3 cryptography speedtest-cli
     cd /root/
     git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks
     cat > userapiconfig.py << EOF
