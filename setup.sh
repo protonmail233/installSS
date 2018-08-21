@@ -28,7 +28,7 @@ EOF
         apt-get update && apt-get install software-properties-common landscape-common update-notifier-common -y
         add-apt-repository ppa:ondrej/php -y
         add-apt-repository ppa:ondrej/nginx-mainline -y
-        apt-get update && apt-get dist-upgrade -y  
+        apt-get update && apt-get dist-upgrade -y
     else
         echo "System version not supported"
         exit 1
@@ -108,9 +108,8 @@ EOF
 }
 ssr_install(){
     echo "sshd: ALL" > /etc/hosts.allow
-    pip install setuptools -U && pip2 install cryptography -U && pip2 install cymysql==0.9.4 requests pyasn1 ndg-httpsclient pyOpenSSL urllib3 cryptography speedtest-cli
-    cd /root/
-    git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks
+    pip install setuptools -U && pip install cryptography pyOpenSSL -U && pip install cymysql requests pyasn1 ndg-httpsclient urllib3 speedtest-cli
+    cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks
     cat > userapiconfig.py << EOF
 # Config
 NODE_ID = 114514
