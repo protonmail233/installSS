@@ -38,7 +38,9 @@ lemp_install(){
     apt-get install vim git sudo unzip screen dialog gnupg2 htop mtr nload hdparm python-pip python-dev python3-pip python3-dev build-essential openssl libelf-dev libffi-dev libssl-dev fail2ban libsodium-dev nginx-light php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
     pip3 install pip -U && pip2 install pip -U && hash -r
     curl -sL https://deb.nodesource.com/setup_8.x | bash -
-    apt update && apt install nodejs -y && npm i -g npm yarn pm2
+    curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    apt-get update && apt-get install nodejs yarn -y && yarn global add pm2
     apt autoremove && apt autoclean
     echo "* soft nofile 512000" >> /etc/security/limits.conf
     echo "* hard nofile 512000" >> /etc/security/limits.conf
