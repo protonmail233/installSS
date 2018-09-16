@@ -2,7 +2,7 @@
 check_system(){
     source /etc/os-release
     if [[ "${ID}" == "debian" && ${VERSION_ID} -ge 8 ]];then
-        apt-get update && apt-get install lsb-release wget curl ca-certificates apt-transport-https -y
+        apt-get update && apt-get install lsb-release wget curl ca-certificates apt-transport-https language-pack-en -y
         cat > /etc/apt/sources.list << EOF
 deb http://debian-archive.trafficmanager.net/debian $(lsb_release -sc) main contrib non-free
 deb http://debian-archive.trafficmanager.net/debian-security $(lsb_release -sc)/updates main contrib non-free
@@ -111,56 +111,8 @@ EOF
 ssr_install(){
     echo "sshd: ALL" > /etc/hosts.allow
     pip install setuptools -U && pip install cryptography pyOpenSSL -U && pip install cymysql requests pyasn1 ndg-httpsclient urllib3 speedtest-cli
-    cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks
-    cat > userapiconfig.py << EOF
-# Config
-NODE_ID = 114514
-
-# hour,set 0 to disable
-SPEEDTEST = 0
-CLOUDSAFE = 1
-ANTISSATTACK = 0
-AUTOEXEC = 0
-
-MU_SUFFIX = 'com'
-MU_REGEX = '%5m%id.%suffix'
-
-SERVER_PUB_ADDR = '127.0.0.1'  # mujson_mgr need this to generate ssr link
-API_INTERFACE = 'modwebapi'  # glzjinmod, modwebapi
-
-WEBAPI_URL = 'https://cloudhammer.org'
-WEBAPI_TOKEN = 'cloudhammer.org'
-
-# mudb
-MUDB_FILE = 'mudb.json'
-
-# Mysql
-MYSQL_HOST = '127.0.0.1'
-MYSQL_PORT = 3306
-MYSQL_USER = 'ss'
-MYSQL_PASS = 'ss'
-MYSQL_DB = 'shadowsocks'
-
-MYSQL_SSL_ENABLE = 0
-MYSQL_SSL_CA = ''
-MYSQL_SSL_CERT = ''
-MYSQL_SSL_KEY = ''
-
-# API
-API_HOST = '127.0.0.1'
-API_PORT = 80
-API_PATH = '/mu/v2/'
-API_TOKEN = 'abcdef'
-API_UPDATE_TIME = 60
-
-# Manager (ignore this)
-MANAGE_PASS = 'ss233333333'
-# if you want manage in other server you should set this value to global ip
-MANAGE_BIND_IP = '127.0.0.1'
-# make sure this port is idle
-MANAGE_PORT = 23333
-EOF
-    pm2 start server.json && pm2 startup && pm2 save && cd /root/
+    cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks && vi userapiconfig.py
+    pm2 start server.json && pm2 startup && pm2 save && cd /root/ && curl ipv4.ip.sb
 }
 
 action=$1
