@@ -2,12 +2,12 @@
 check_system(){
     source /etc/os-release
     if [[ "${ID}" == "debian" && ${VERSION_ID} -ge 8 ]];then
-        apt-get update && apt-get install lsb-release wget curl ca-certificates apt-transport-https language-pack-en -y
+        apt-get update && apt-get install lsb-release wget curl ca-certificates apt-transport-https -y
         cat > /etc/apt/sources.list << EOF
-deb http://debian-archive.trafficmanager.net/debian $(lsb_release -sc) main contrib non-free
-deb http://debian-archive.trafficmanager.net/debian-security $(lsb_release -sc)/updates main contrib non-free
-deb http://debian-archive.trafficmanager.net/debian $(lsb_release -sc)-updates main contrib non-free
-deb http://debian-archive.trafficmanager.net/debian $(lsb_release -sc)-backports main contrib non-free
+deb http://mirror.rackspace.com/debian $(lsb_release -sc) main contrib non-free
+deb http://mirror.rackspace.com/debian-security $(lsb_release -sc)/updates main contrib non-free
+deb http://mirror.rackspace.com/debian $(lsb_release -sc)-updates main contrib non-free
+deb http://mirror.rackspace.com/debian $(lsb_release -sc)-backports main contrib non-free
 EOF
         wget -O /etc/apt/trusted.gpg.d/nginx-mainline.gpg https://packages.sury.org/nginx-mainline/apt.gpg
         cat >> /etc/apt/sources.list.d/nginx.list << EOF
@@ -18,12 +18,12 @@ EOF
         apt-get update && apt-get dist-upgrade -y 
 
     elif [[ "${ID}" == "ubuntu" && `echo "${VERSION_ID}" | cut -d '.' -f1` -ge 16 ]];then
-        apt-get install lsb-release wget curl ca-certificates -y
+        apt-get install lsb-release apt-transport-https wget curl ca-certificates language-pack-en -y
         cat > /etc/apt/sources.list << EOF
-deb http://azure.archive.ubuntu.com/ubuntu/ $(lsb_release -sc) main restricted universe multiverse
-deb http://azure.archive.ubuntu.com/ubuntu/ $(lsb_release -sc)-security main restricted universe multiverse
-deb http://azure.archive.ubuntu.com/ubuntu/ $(lsb_release -sc)-updates main restricted universe multiverse
-deb http://azure.archive.ubuntu.com/ubuntu/ $(lsb_release -sc)-backports main restricted universe multiverse
+deb http://mirror.rackspace.com/ubuntu/ $(lsb_release -sc) main restricted universe multiverse
+deb http://mirror.rackspace.com/ubuntu/ $(lsb_release -sc)-security main restricted universe multiverse
+deb http://mirror.rackspace.com/ubuntu/ $(lsb_release -sc)-updates main restricted universe multiverse
+deb http://mirror.rackspace.com/ubuntu/ $(lsb_release -sc)-backports main restricted universe multiverse
 EOF
         apt-get update && apt-get install software-properties-common landscape-common update-notifier-common -y
         add-apt-repository ppa:ondrej/php -y
