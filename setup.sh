@@ -112,7 +112,7 @@ ssr_install(){
     echo "sshd: ALL" > /etc/hosts.allow
     pip install setuptools -U && pip install cryptography pyOpenSSL -U && pip install cymysql requests pyasn1 ndg-httpsclient urllib3 speedtest-cli
     cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks && vi userapiconfig.py
-    pm2 start server.json && pm2 startup && pm2 save && cd /root/ && curl ipv4.ip.sb && neofetch
+    pm2 start server.json && pm2 startup && pm2 save && cd /root/ && curl ipv4.ip.sb
 }
 
 action=$1
