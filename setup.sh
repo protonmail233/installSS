@@ -2,7 +2,7 @@
 check_system(){
     source /etc/os-release
     if [[ "${ID}" == "debian" && ${VERSION_ID} -ge 8 ]];then
-        apt-get update && apt-get install lsb-release wget curl ca-certificates apt-transport-https -y
+        apt-get update && apt-get install lsb-release wget curl ca-certificates apt-transport-https locales locales-all -y
         cat > /etc/apt/sources.list << EOF
 deb http://mirror.rackspace.com/debian $(lsb_release -sc) main contrib non-free
 deb http://mirror.rackspace.com/debian-security $(lsb_release -sc)/updates main contrib non-free
