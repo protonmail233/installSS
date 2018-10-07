@@ -17,7 +17,7 @@ EOF
         sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
         apt-get update && apt-get dist-upgrade -y 
     elif [[ "${ID}" == "ubuntu" && `echo "${VERSION_ID}" | cut -d '.' -f1` -ge 16 ]];then
-        apt-get install lsb-release apt-transport-https wget curl ca-certificates language-pack-en -y
+        apt-get install lsb-release apt-transport-https wget curl ca-certificates language-pack-en-base -y
         cat > /etc/apt/sources.list << EOF
 deb http://mirror.rackspace.com/ubuntu/ $(lsb_release -sc) main restricted universe multiverse
 deb http://mirror.rackspace.com/ubuntu/ $(lsb_release -sc)-security main restricted universe multiverse
@@ -83,6 +83,7 @@ bbr_install(){
         cat > /etc/sysctl.conf << EOF
 vm.swappiness = 10
 vm.vfs_cache_pressure = 50
+net.ipv4.ip_forward = 1
 net.ipv4.icmp_echo_ignore_all = 1
 net.core.default_qdisc = fq_codel
 net.ipv4.tcp_congestion_control = bbr
