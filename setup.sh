@@ -117,7 +117,7 @@ ssr_install(){
     echo "sshd: ALL" > /etc/hosts.allow
     pip install cymysql requests pyasn1 ndg-httpsclient urllib3
     cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && vim /root/shadowsocks/userapiconfig.py
-    pm2 start /root/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && history -c
+    pm2 start /root/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && echo "" && speedtest-cli --share
 }
 ssrr_install(){
     cd /root/ && git clone -b manyuser https://github.com/shadowsocksrr/shadowsocksr.git && cd shadowsocksr && bash initcfg.sh && vim /root/shadowsocksr/user-config.json
@@ -129,7 +129,7 @@ ssrr_install(){
     "script": "server.py"
 }
 EOF
-    pm2 start /root/shadowsocksr/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && history -c
+    pm2 start /root/shadowsocksr/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && echo "" && speedtest-cli --share
 }
 
 action=$1
