@@ -120,8 +120,7 @@ ssr_install(){
     pm2 start /root/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && history -c
 }
 ssrr_install(){
-    cd /root/ && git clone -b manyuser https://github.com/shadowsocksrr/shadowsocksr.git
-    bash /root/shadowsocksr/initcfg.sh && vim /root/shadowsocksr/user-config.json
+    cd /root/ && git clone -b manyuser https://github.com/shadowsocksrr/shadowsocksr.git && cd shadowsocksr && bash initcfg.sh && vim /root/shadowsocksr/user-config.json
     cat > /root/shadowsocksr/shadowsocks/server.json <<EOF
 {
     "name": "SSRR",
