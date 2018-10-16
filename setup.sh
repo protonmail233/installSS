@@ -39,6 +39,7 @@ lemp_install(){
     apt-get purge apache* -y
     apt-get install vim git sudo unzip screen dialog gnupg2 htop mtr nload hdparm python-pip python-dev python3-pip python3-dev build-essential openssl libelf-dev libffi-dev libssl-dev fail2ban libsodium-dev nginx-light php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
     pip3 install pip -U && pip2 install pip -U && hash -r
+    pip install setuptools -U && pip install cryptography pyOpenSSL speedtest-cli -U
     curl -sL https://deb.nodesource.com/setup_8.x | bash -
     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -114,9 +115,22 @@ EOF
 }
 ssr_install(){
     echo "sshd: ALL" > /etc/hosts.allow
-    pip install setuptools -U && pip install cryptography pyOpenSSL -U && pip install cymysql requests pyasn1 ndg-httpsclient urllib3 speedtest-cli
-    cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && cd shadowsocks && vi userapiconfig.py
-    pm2 start server.json && pm2 startup && pm2 save && cd /root/ && curl ipv4.ip.sb && history -c
+    pip install cymysql requests pyasn1 ndg-httpsclient urllib3
+    cd /root/ && git clone https://github.com/S8Cloud/shadowsocks.git && vim /root/shadowsocks/userapiconfig.py
+    pm2 start /root/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && history -c
+}
+ssrr_install(){
+    cd /root/ && git clone -b manyuser https://github.com/shadowsocksrr/shadowsocksr.git
+    bash /root/shadowsocksr/initcfg.sh && vim /root/shadowsocksr/user-config.json
+    cat > /root/shadowsocksr/shadowsocks/server.json <<EOF
+{
+    "name": "SSRR",
+    "cwd": "/root/shadowsocksr/shadowsocks",
+    "interpreter": "python2",
+    "script": "server.py"
+}
+EOF
+    pm2 start /root/shadowsocksr/shadowsocks/server.json && pm2 startup && pm2 save && curl whatismyip.akamai.com && history -c
 }
 
 action=$1
@@ -132,6 +146,9 @@ case "$action" in
         ;;
     ssr)
         ssr_install
+        ;;
+    ssrr)
+        ssrr_install
         ;;
     *)
         exit 1
