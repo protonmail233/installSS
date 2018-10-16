@@ -13,5 +13,8 @@ bash setup.sh
 如果更换内核会自动重启，重启后：
 ```
 bash setup.sh bbr
+// 安装 SSPanel 后端，适合机场
 bash setup.sh ssr 
+// 安装 SSR(R) 服务器，适合个人
+bash setup.sh ssrr
 ```
